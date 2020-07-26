@@ -1,8 +1,6 @@
 # StockBot
-StockBot for Discord
-
-**Note**: The original repo, uploaded March 2020 was deleted. This repo is an identical continuation of that.
- ---
+ StockBot for discord
+ 
  Responds to certain commands in the discord chat:
  
     Get a quick price:
@@ -16,7 +14,6 @@ StockBot for Discord
     Get real time indicies:
     
     t$ indicies
-    
     Stockbot Replies:
     S&P 500: 3035.64 +81.42 (+2.76%)
     NASDAQ: 8914.71 +306.98(+3.57%)
@@ -24,9 +21,7 @@ StockBot for Discord
     10 Year T-Note: 1.08% -0.04 (-3.90%)
       
     
-Parses the AlphaVantage API to get important stock details from the NYSE and NASDAQ.
- 
-Uses Discord.js and node.js.
+ Parses the AlphaVantage API to get important stock details from the NYSE and NASDAQ
+ Uses Discord.js and node.js.
 
-More commands coming soon! 
-
+More commands comming soon!
