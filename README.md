@@ -1,6 +1,9 @@
 # StockBot
  StockBot for discord
  
+ **Note**: The original repo, uploaded March 2020 was deleted. This repo is an identical continuation of that.
+ ---
+ 
  Responds to certain commands in the discord chat:
  
     Get a quick price:
