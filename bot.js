@@ -1,10 +1,8 @@
-// Run dotenv
 require('dotenv').config();
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-const APIKEY = 'XKWUFSET635G7S1X'
+const APIKEY = process.env.APIKEY;
 
 const Discord = require('discord.js');
-const RichEmbed = require('discord.js');
 const bot = new Discord.Client();
 
 bot.on('ready', () => {
@@ -130,7 +128,7 @@ bot.on('message', function(message){
         finalString = finalString + element[1] + "\n";
       });
 
-      let dispDaily = new Discord.RichEmbed()
+      let dispDaily = new Discord.MessageEmbed()
       .setTitle('S&P 500 Current Performance by Sector')
       .setColor(0xFF0000)
       .setDescription(finalString);
@@ -143,7 +141,7 @@ bot.on('message', function(message){
       if (message.content === 'how to embed') {
         // We can create embeds using the MessageEmbed constructor
         // over at https://discord.js.org/#/docs/main/stable/class/RichEmbed
-        const embed = new Discord.RichEmbed()
+        const embed = new Discord.MessageEmbed()
         .setTitle('A slick little embed')
         .setColor(0xFF0000)
         .setDescription('Hello, this is a slick embed!');
