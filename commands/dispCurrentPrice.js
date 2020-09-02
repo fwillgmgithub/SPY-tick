@@ -8,27 +8,26 @@ module.exports = {
 	description: 'calls symbol search to find the company Name and ticker',
 	async execute(message, args) {
 
-        var company = args[0];
+        if(!args.length){
+            return message.channel.send("**You need to specify a company/ticker!** USAGE: t$ price [ticker]");
+        }
+        var companyQry = queryStr.stringify({ keywords: args.join(' ') });;
+
         //does not work for indicies yet (sp500, nasdaq, djia)
-        var url = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords='
-        + company + '&apikey=' + ALPHA_APIKEY + '&datatype=JSON'
-
+        var url = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&${companyQry}&apikey=${ALPHA_APIKEY}&datatype=JSON`
         var { bestMatches } = await fetch(url).then(response => response.json());
-        if(!bestMatches)
-        {
-            message.channel.send("Error! Cannot Find Company: " + company);
-        }
-        else
-        {
-            var ticker = bestMatches[0]["1. symbol"];
-            var companyName = bestMatches[0]["2. name"];
 
-            var infoArr = await getInfoTicker.execute(ticker, message);
-            if(!infoArr)
-            {
-                return message.channel.send("Something went wrong!")
-            }
-            message.channel.send(`**${companyName} (${ticker})**\nCurrent Price: $${infoArr[0]} ${infoArr[1]} (${infoArr[2]})`);
+        if(!bestMatches.length) {
+            return message.channel.send(`**Error!** Cannot Find Company: ${args.join(' ')}`);
         }
+
+        var ticker = bestMatches[0]["1. symbol"];
+        var companyName = bestMatches[0]["2. name"];
+        var infoArr = await getInfoTicker.execute(ticker, message);
+
+        if(!infoArr || infoArr === undefined) {
+            return message.channel.send("Something went wrong!")
+        }
+        message.channel.send(`**${companyName} (${ticker})**\nCurrent Price: $${infoArr[0]} ${infoArr[1]} (${infoArr[2]})`);
 	},
 };

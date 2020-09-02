@@ -11,8 +11,7 @@ module.exports = {
         var url = `https://finnhub.io/api/v1/quote?symbol=${stockTicker}&token=${FINN_APIKEY}`
         const{ c, pc } = await fetch(url).then(response => response.json());
 
-            if(!c)
-            {
+            if(!c){
                 return message.channel.send("Error!");
             }
             var prevClose = pc;
