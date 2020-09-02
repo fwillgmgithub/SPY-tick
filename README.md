@@ -17,6 +17,11 @@ Search by Company Name:
     The Walt Disney Company (DIS)
     Current Price: $134.72 +1.17 (+0.88%)
 
+    t$ p american express
+
+    American Express Company (AXP)
+    Current Price: $104.23 +1.76 (+1.72%)
+
 Option for a more detailed breakdown:
 
     t$ company JNJ
@@ -40,7 +45,7 @@ Get real time indices: **CURRENTLY BROKEN**
     10 Year T-Note: 1.08% -0.04 (-3.90%)
 
 
-Uses the Finntech.io API for realtime stock prices and uses the AlphaVantage API for company searches.
+Uses the finnhub.io API for realtime stock prices and uses the AlphaVantage API for company searches.
 Discord.js and node.js.
 
 More commands coming soon!
