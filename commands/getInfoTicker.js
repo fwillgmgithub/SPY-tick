@@ -1,37 +1,32 @@
-const get = require('./Get.js');
+const fetch = require('node-fetch');
 require('dotenv').config();
-const APIKEY = process.env.APIKEY;
+const FINN_APIKEY = process.env.FINN_APIKEY;
 module.exports = {
 	name: 'getInfoTicker',
-	description: 'From a stock ticker, gets data, formats it, and returns a string array' +
+	description: 'From a stock ticker, gets data, formats it, and returns an array' +
     ' in the form [dayPrice, rawChange, percentChange]',
-	execute(ticker, message) {
+	async execute(ticker, message) {
 
-        var url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='
-        + ticker.toUpperCase() + '&apikey=' + APIKEY + '&datatype=JSON'
-        var json_obj = JSON.parse(get.Get(url));
+        var stockTicker = ticker.toUpperCase().trim();
+        var url = `https://finnhub.io/api/v1/quote?symbol=${stockTicker}&token=${FINN_APIKEY}`
+        const{ c, pc } = await fetch(url).then(response => response.json());
 
-        try {
-          var dayPrice = json_obj["Global Quote"]["05. price"]
-          dayPrice = Number.parseFloat(dayPrice).toFixed(2);
-          var rawChange = json_obj["Global Quote"]["09. change"]
-          rawChange = Number.parseFloat(rawChange).toFixed(2);
-          var percentChange = json_obj["Global Quote"]["10. change percent"]
-          percentChange = percentChange.substring(0, percentChange.length-1);
-          percentChange = Number.parseFloat(percentChange).toFixed(2);
-        } catch (err) {
-          console.log(err + " has been caught");
-          message.channel.send("You are sending requests too quickly. Try again later");
-          return null;
-        }
+            if(!c)
+            {
+                return message.channel.send("Error!");
+            }
+            var prevClose = pc;
+            var currPrice = c;
+            var rawChange = "" + ((currPrice - prevClose).toFixed(2));
+            var percentChange = "" + ((100 * rawChange/prevClose).toFixed(2));
 
-        if(rawChange > 0 && percentChange > 0)
-        {
-          rawChange = "+" + rawChange;
-          percentChange = "+" + percentChange;
-        }
-        percentChange = percentChange + '%';
-
-        return [dayPrice, rawChange, percentChange];
-	},
+            if(rawChange > 0 && percentChange > 0)
+            {
+              rawChange = "+" + rawChange;
+              percentChange = "+" + percentChange;
+            }
+            percentChange = percentChange + '%';
+            currPrice = "" + (currPrice.toFixed(2));
+            return [currPrice, rawChange, percentChange];
+    },
 };

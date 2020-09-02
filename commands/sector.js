@@ -1,4 +1,3 @@
-const get = require('./Get.js');
 const Discord = require('discord.js');
 module.exports = {
 	name: 'sector',
