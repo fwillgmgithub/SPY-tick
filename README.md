@@ -8,11 +8,16 @@ Get a quick price:
     t$ price IBM
 
     International Business Machines Corporation (IBM)
-    Current Price: $127.64 +4.24(+3.44%)
+    Current Price: $127.64 +4.24 (+3.44%)
+    
+    t$ p VZ
+    
+    Verizon Communications Inc. (VZ)
+    Current Price: $60.33 +1.17 (+1.98%)
 
 Search by Company Name:
 
-    t$ p disney
+    t$ price disney
 
     The Walt Disney Company (DIS)
     Current Price: $134.72 +1.17 (+0.88%)
