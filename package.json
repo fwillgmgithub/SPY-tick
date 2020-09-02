@@ -1,17 +1,16 @@
 {
   "name": "StockBot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0",
+  "description": "Discord Bot that provides information on the Stocks",
+  "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Eric Jin",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
-    "xmlhttprequest": "^1.8.0"
   }
 }
