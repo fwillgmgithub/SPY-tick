@@ -4,7 +4,7 @@ const queryStr = require('querystring');
 require('dotenv').config();
 const ALPHA_APIKEY = process.env.ALPHA_APIKEY;
 module.exports = {
-	name: 'company',
+	name: 'price',
 	description: 'calls symbol search to find the company Name and ticker',
 	async execute(message, args) {
 

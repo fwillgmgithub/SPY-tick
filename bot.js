@@ -19,13 +19,6 @@ bot.on('ready', () => {
 
 bot.login(process.env.DISCORD_TOKEN);
 
-function Get(yourUrl){
-  var Httpreq = new XMLHttpRequest(); // a new request
-  Httpreq.open("GET",yourUrl,false);
-  Httpreq.send(null);
-  return Httpreq.responseText;
-}
-
 bot.on('message', function(message){
 
   if (message.content.substring(0, 3) === botFlag) {
@@ -33,110 +26,21 @@ bot.on('message', function(message){
     var args = message.content.substring(botFlag.length).trim().split(/ +/);
     var cmd = args.shift().toLowerCase();
 
-    //test if cmd is valid
-    switch(cmd) {
-
-      case 'price':
-      case 'p':
-        dispCurrentPrice(args);
-        break;
-      case 'indicies':
-        indicies();
-        break;
-      case 'help':
-        getHelp();
-        break;
-      case 'tnote':
-      case 'bonds':
-        treasurys();
-        break;
-      case 'sector':
-        sectors();
-        break;
-      default:
-        message.channel.send("Cannot find command, use t$ help");
+    if(!args,length){
+        return message.channel.send("You need to specify a command!")
     }
+
+    if(!bot.commandsList.has(cmd)){
+            msg.channel.send("Cannot find command, use t$ help");
+        }else{
+            try{
+                bot.commandsList.get(cmd).execute(message, args);
+            }catch(err){
+                console.error("Caught " + err);
+                msg.channel.send(`Error running: ${cmd}.`);
+            }
+        }
   }
-
-    function getHelp()
-    {
-      bot.commandList.get('help').execute(message, args);
-    }
-
-    function indicies()
-    {
-      bot.commandList.get('indicies').execute(message, args);
-    }
-
-    function sectors()
-    {
-      bot.commandList.get('sector').execute(message, args);
-    }
-
-    function dispCurrentPrice(company)
-    {
-      bot.commandList.get('company').execute(message, company);
-    }
-
-    function dispDetailPrice()
-    {
-        //wip
-    }
-
-    function treasurys()
-    {
-      message.channel.send("Select the type of security: `Use t$ choose 1-3`" +
-      "\n **1. US T-Bills: ** 1 month - 1 year" +
-      "\n **2. US T-Notes: ** 2 years - 10 years" +
-      "\n **3. US T-Bonds: ** > 10 years");
-
-
-      /*
-      const filter = m => m.content.startsWith('t$ choose');
-      const collector = message.channel.createMessageCollector(filter, { time: 10000, max: 4});
-
-      collector.on('collect', function(choice){
-
-      let menuNum = choice.content.split(' ');
-      menuNum = menuNum[2];
-
-      if(menuNum == 1)
-      {
-      console.log("One");
-    }
-    else if(menuNum == 2)
-    {
-    console.log("Two");
-  }
-  else if(menuNum == 3)
-  {
-  console.log("Three");
-}
-else if(menuNum == 4)
-{
-console.log("Four");
-}
-else {
-message.channel.send("Invalid Argument");
-collector.stop("Invalid Argument");
-}
-//if(choice.content ==  )
-
-});
-collector.on('end', function(collected, reason){
-console.log(`Collected ${collected.size} of items`);
-console.log(`Ended Collection because of ${reason}`);
-});
-//sub 1 Year
-// 1,2,3,6 months
-//1 to 10 years
-//1 2 3 5 7 years
-//10 +
-//10 20 30 years
-
-//print yield curve
-*/
-}
 
 
   if(message.content === 'hey siri show me shares of jimmy')
@@ -155,7 +59,5 @@ console.log(`Ended Collection because of ${reason}`);
   {
     message.channel.send("A man👨has fallen😵into the river🏊 in Lego city🌃! Start the new rescue helicopter🚁! Hey!😫Build 🔨the helicopter 🚁and off to the rescue! 🚑Prepare the lifeline💔, lower⬇️ the stretcher, and make the rescue🚑. 🎷🎺The new Emergency Collection from Lego City! 🎷🎺");
   }
-
-
 
 });
