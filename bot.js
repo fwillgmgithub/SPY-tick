@@ -1,7 +1,6 @@
 require('dotenv').config();
 const Discord = require('discord.js');
 const fs = require('fs');
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const botFlag = 't$ ';
 
 const bot = new Discord.Client();
@@ -23,21 +22,24 @@ bot.on('message', function(message){
 
   if (message.content.substring(0, 3) === botFlag) {
 
-    var args = message.content.substring(botFlag.length).trim().split(/ +/);
-    var cmd = args.shift().toLowerCase();
+    let args = message.content.substring(botFlag.length).trim().split(/ +/);
+    let cmd = args.shift().toLowerCase();
 
-    if(!args,length){
-        return message.channel.send("You need to specify a command!")
+    if(message.content.length == botFlag.length){
+        return message.channel.send("You need to specify a command!");
     }
 
-    if(!bot.commandsList.has(cmd)){
-            msg.channel.send("Cannot find command, use t$ help");
+    const cmdExec = bot.commandList.get(cmd)
+        || bot.commandList.find(com => com.aliases && com.aliases.includes(cmd));
+
+    if(!cmdExec){
+            message.channel.send("Cannot find command, use t$ help");
         }else{
             try{
-                bot.commandsList.get(cmd).execute(message, args);
+                cmdExec.execute(message, args);
             }catch(err){
                 console.error("Caught " + err);
-                msg.channel.send(`Error running: ${cmd}.`);
+                message.channel.send(`Error running: ${cmd}.`);
             }
         }
   }

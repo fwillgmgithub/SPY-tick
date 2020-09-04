@@ -7,17 +7,17 @@ module.exports = {
     ' in the form [dayPrice, rawChange, percentChange]',
 	async execute(ticker, message) {
 
-        var stockTicker = ticker.toUpperCase().trim();
-        var url = `https://finnhub.io/api/v1/quote?symbol=${stockTicker}&token=${FINN_APIKEY}`
+        let stockTicker = ticker.toUpperCase().trim();
+        const url = `https://finnhub.io/api/v1/quote?symbol=${stockTicker}&token=${FINN_APIKEY}`
         const{ c, pc } = await fetch(url).then(response => response.json());
 
             if(!c){
-                return message.channel.send("Error!");
+                return undefined;
             }
-            var prevClose = pc;
-            var currPrice = c;
-            var rawChange = "" + ((currPrice - prevClose).toFixed(2));
-            var percentChange = "" + ((100 * rawChange/prevClose).toFixed(2));
+            let prevClose = pc;
+            let currPrice = c;
+            let rawChange = "" + ((currPrice - prevClose).toFixed(2));
+            let percentChange = "" + ((100 * rawChange/prevClose).toFixed(2));
 
             if(rawChange > 0 && percentChange > 0)
             {
