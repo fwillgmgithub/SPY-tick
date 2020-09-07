@@ -25,7 +25,7 @@ bot.on('message', function(message){
     let args = message.content.substring(botFlag.length).trim().split(/ +/);
     let cmd = args.shift().toLowerCase();
 
-    if(message.content.length == botFlag.length){
+    if(message.content === 't$'){
         return message.channel.send("You need to specify a command!");
     }
 
