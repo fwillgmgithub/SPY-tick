@@ -14,9 +14,7 @@ module.exports = {
         const url1 = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&${companyQry}&apikey=${ALPHA_APIKEY}&datatype=JSON`
         let { bestMatches } = await fetch(url1).then(response => response.json());
 
-        if(!bestMatches.length) {
-                return undefined;
-            }
+        if(!bestMatches.length) return undefined;
 
         let ticker = bestMatches[0]["1. symbol"];
         let companyName = bestMatches[0]["2. name"];
@@ -25,21 +23,20 @@ module.exports = {
         const url2 = `https://finnhub.io/api/v1/quote?symbol=${stockTicker}&token=${FINN_APIKEY}`
         const{ c, pc } = await fetch(url2).then(response => response.json());
 
-            if(!c){
-                return undefined;
-            }
-            let prevClose = pc;
-            let currPrice = c;
-            let rawChange = "" + ((currPrice - prevClose).toFixed(2));
-            let percentChange = "" + ((100 * rawChange/prevClose).toFixed(2));
+        if(!c) return undefined;
 
-            if(rawChange > 0 && percentChange > 0)
-            {
-              rawChange = "+" + rawChange;
-              percentChange = "+" + percentChange;
-            }
-            percentChange = percentChange + '%';
-            currPrice = "" + (currPrice.toFixed(2));
-            return [companyName, ticker, currPrice, rawChange, percentChange];
+        let prevClose = pc;
+        let currPrice = c;
+        let rawChange = "" + ((currPrice - prevClose).toFixed(2));
+        let percentChange = "" + ((100 * rawChange/prevClose).toFixed(2));
+
+        if(rawChange > 0 && percentChange > 0)
+        {
+            rawChange = "+" + rawChange;
+            percentChange = "+" + percentChange;
+        }
+        percentChange = percentChange + '%';
+        currPrice = "" + (currPrice.toFixed(2));
+        return [companyName, ticker, currPrice, rawChange, percentChange];
     },
 };
